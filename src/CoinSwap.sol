@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {IERC20} "@openzeppelin-contracts/contracts/interface/IERC20.sol";
-import {AggregatorV3Interface} from "lib/chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
-import {FeedRegistryInterface} from "lib/chainlink/contracts/src/v0.8/interfaces/FeedRegistryInterface.sol";
+import {IERC20} from "@openzeppelin/contracts/interfaces/IERC20.sol";
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+import {FeedRegistryInterface} from "@chainlink/contracts/src/v0.8/interfaces/FeedRegistryInterface.sol";
 
 contract CoinSwap {
     address public ethToken;
@@ -103,7 +103,3 @@ contract CoinSwap {
         return uint256(amountIn * uint256(priceIn));
     }
 }
-
-//0x514910771AF9Ca656af840dff83E8264EcF986CA Link mainnet
-//0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2 eth mainnet
-// 0x6B175474E89094C44Da98b954EedeAC495271d0F dai mainnet
