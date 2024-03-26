@@ -6,7 +6,7 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interf
 import {FeedRegistryInterface} from "@chainlink/contracts/src/v0.8/interfaces/FeedRegistryInterface.sol";
 
 contract CoinSwap {
-    address public ethToken;
+    address public wEthToken;
     address public linkToken;
     address public daiToken;
 
@@ -22,12 +22,12 @@ contract CoinSwap {
     event DaiToLinkSwap(address indexed sender, uint256 amount);
 
     constructor(
-        address _ethToken,
+        address _wEthToken,
         address _linkToken,
         address _daiToken,
         address _feedRegistryAddress
     ) {
-        ethToken = _ethToken;
+        wEthToken = _wEthToken;
         linkToken = _linkToken;
         daiToken = _daiToken;
         feedRegistryAddress = _feedRegistryAddress;
@@ -36,8 +36,8 @@ contract CoinSwap {
     function swapEthToLink(uint256 amount) external {
         require(amount > 0, "Amount must be greater than zero");
 
-        IERC20(ethToken).transferFrom(msg.sender, address(this), amount);
-        uint256 amountOut = _handleAmountOut(ethToken, linkToken, amount);
+        IERC20(wEthToken).transferFrom(msg.sender, address(this), amount);
+        uint256 amountOut = _handleAmountOut(wEthToken, linkToken, amount);
         IERC20(linkToken).transfer(msg.sender, amountOut);
 
         emit EthToLinkSwap(msg.sender, amount);
@@ -46,8 +46,8 @@ contract CoinSwap {
     function swapEthToDai(uint256 amount) external {
         require(amount > 0, "Amount must be greater than zero");
 
-        IERC20(ethToken).transferFrom(msg.sender, address(this), amount);
-        uint256 amountOut = _handleAmountOut(ethToken, daiToken, amount);
+        IERC20(wEthToken).transferFrom(msg.sender, address(this), amount);
+        uint256 amountOut = _handleAmountOut(wEthToken, daiToken, amount);
         IERC20(daiToken).transfer(msg.sender, amountOut);
 
         emit EthToDaiSwap(msg.sender, amount);
@@ -57,8 +57,8 @@ contract CoinSwap {
         require(amount > 0, "Amount must be greater than zero");
 
         IERC20(linkToken).transferFrom(msg.sender, address(this), amount);
-        uint256 amountOut = _handleAmountOut(linkToken, ethToken, amount);
-        IERC20(ethToken).transfer(msg.sender, amountOut);
+        uint256 amountOut = _handleAmountOut(linkToken, wEthToken, amount);
+        IERC20(wEthToken).transfer(msg.sender, amountOut);
 
         emit LinkToEthSwap(msg.sender, amount);
     }
@@ -77,8 +77,8 @@ contract CoinSwap {
         require(amount > 0, "Amount must be greater than zero");
 
         IERC20(daiToken).transferFrom(msg.sender, address(this), amount);
-        uint256 amountOut = _handleAmountOut(daiToken, ethToken, amount);
-        IERC20(ethToken).transfer(msg.sender, amountOut);
+        uint256 amountOut = _handleAmountOut(daiToken, wEthToken, amount);
+        IERC20(wEthToken).transfer(msg.sender, amountOut);
 
         emit DaiToEthSwap(msg.sender, amount);
     }

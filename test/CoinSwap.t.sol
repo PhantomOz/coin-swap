@@ -18,7 +18,7 @@ contract CoinSwapTest is Test {
 
     function test__swapEthToDai() external {
         vm.prank();
-        coinswap.swapEthToDai(amount);
+        coinswap.swapEthToDai();
     }
 
     function test__swapLinkToEth() external {
